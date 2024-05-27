@@ -1,24 +1,24 @@
+import Error from "@/components/ui/error";
+import getQuery from "@/lib/queries/getQueries";
 import { ApiResponse } from "@/types/ApiResponse";
 import { Product as ProductType } from "@/types/types";
 import Product from "./Product";
 
 
 export async function getProducts(): Promise<ApiResponse> {
-    const response = await fetch(`${process.env.NEXT_URL}/api/products?limit=9`, { cache: 'no-cache' });
+    const response = await fetch(`https://exclusive-mart.vercel.app/api/products?limit=9`);
     return response.json();
 }
 
 export default async function Products() {
-    // const { message, success, data } = await getQuery(`${process.env.NEXT_URL}/api/products?limit=9`);
-    // const res = await getProducts();
-    // const products: ProductType[] = res.data || [];
-    const products: ProductType[] = [];
+    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/products?limit=9`);
+    const products: ProductType[] = data || [];
 
     let content;
-    // if (!res.success) {
-    //     content = <Error>{res.message}</Error>;
-    // }
-    if (true) {
+    if (!success) {
+        content = <Error>{message}</Error>;
+    }
+    if (success) {
         content = products.map((product) => <Product key={product._id} product={product} />);
     }
 

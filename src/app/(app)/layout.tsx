@@ -1,3 +1,4 @@
+import Navbar from "@/components/home/Navbar";
 import TopNotification from "@/components/home/TopNotification";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/providers/AuthProvider";
@@ -22,7 +23,7 @@ export default function RootLayout({
             <AuthProvider>
                 <StoreProvider>
                     <TopNotification />
-                    {/* <Navbar /> */}
+                    <Navbar />
                     <div className="container">
                         {children}
                         <Toaster />
