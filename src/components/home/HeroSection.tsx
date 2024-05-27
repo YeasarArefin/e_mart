@@ -18,7 +18,7 @@ export default async function HeroSection() {
                     categories?.map((category) => <h1 key={category._id}>{category.name}</h1>)
                 }
             </div>
-            <div className="col-span-8 lg:col-span-7">{/*-z-10*/}
+            <div className="col-span-8 lg:col-span-7">
                 <HeroSlider />
             </div>
         </section>
