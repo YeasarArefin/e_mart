@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['adminapi.applegadgetsbd.com']
+        domains: ['adminapi.applegadgetsbd.com', 'dummyimage.com']
     },
     async headers() {
         return [
