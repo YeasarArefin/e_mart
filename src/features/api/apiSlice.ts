@@ -37,6 +37,16 @@ export const apiSlice = createApi({
             keepUnusedDataFor: 300,
             providesTags: ['Wishlists']
         }),
+        toggleCartApi: builder.mutation({
+            query: (data) => ({
+                url: `/cart`,
+                method: `POST`,
+                body: data
+            })
+        }),
+        getCart: builder.query({
+            query: (email) => `/cart?email=${email}&property=false`,
+        })
     })
 });
-export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery } = apiSlice;
+export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useToggleCartApiMutation, useGetCartQuery } = apiSlice;

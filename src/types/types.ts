@@ -45,7 +45,7 @@ export type User = {
     verificationCodeExpiry: Date,
     isVerified: boolean,
     isAdmin: boolean,
-    wishlists: ObjectId[],
+    cart: ObjectId[],
     cart: ObjectId[],
     usedCoupons: string[];
 };

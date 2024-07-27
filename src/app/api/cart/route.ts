@@ -19,10 +19,10 @@ export async function POST(request: NextRequest) {
             user.cart.push(productId);
         }
         await user.save();
-        return sendResponse(true, index !== -1 ? 'Removed from wishlist successfully' : 'Added in wishlist successfully', 200);
+        return sendResponse(true, index !== -1 ? 'Removed from cart successfully' : 'Added in cart successfully', 200);
     } catch (error) {
-        console.log("🚀 ~ POST ~ error: /api/wishlists - failed to update user wishlists", error);
-        return sendResponse(false, 'Failed to update user wishlists', 400, error);
+        console.log("🚀 ~ POST ~ error: /api/cart - failed to update user cart", error);
+        return sendResponse(false, 'Failed to update user cart', 400, error);
     }
 }
 
@@ -34,14 +34,14 @@ export async function GET(request: NextRequest) {
         const property = searchParams.get('property') || '';
         let user;
         if (property === 'true') {
-            user = await UserModel.findOne({ email }).populate('wishlists');
+            user = await UserModel.findOne({ email }).populate('cart');
         } else {
             user = await UserModel.findOne({ email });
         }
-        const wishlists = user?.wishlists;
-        return sendResponse(true, 'wishlist sent successfully', 200, wishlists);
+        const cart = user?.cart || [];
+        return sendResponse(true, 'cart sent successfully', 200, cart);
 
     } catch (error) {
-        return sendResponse(false, 'failed to sent wishlists', 400, error);
+        return sendResponse(false, 'failed to sent cart', 400, error);
     }
 }

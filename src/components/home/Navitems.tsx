@@ -8,7 +8,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { useGetWishListsQuery } from "@/features/api/apiSlice";
+import { useGetCartQuery, useGetWishListsQuery } from "@/features/api/apiSlice";
+import { setInitialCart } from "@/features/cart/cartSlice";
 import { setInitialWishlists } from "@/features/wishlists/wishlistsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { cn } from "@/lib/utils";
@@ -23,6 +24,7 @@ import { IoCartOutline } from "react-icons/io5";
 import { PiSignOut } from "react-icons/pi";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import NotifyBadge from "../ui/notify-badge";
 type Link = {
     name: string,
     to: string;
@@ -33,9 +35,11 @@ export default function NavItems({ links }: { links: Link[]; }) {
     const { data, status } = useSession();
     const { user } = data || {};
     const wishlists = useAppSelector(state => state.wishlists.wishlists) || [];
+    const cart = useAppSelector(state => state.cart.cart) || [];
     const [fetchData, setFetchData] = useState(false);
 
-    const { data: initialWishlists, isError, isLoading, isSuccess } = useGetWishListsQuery(user?.email, { skip: !fetchData });
+    const { data: initialWishlists, isError: isWishlistError, isLoading: isWishlistLoading, isSuccess: isWishlistSuccess } = useGetWishListsQuery(user?.email, { skip: !fetchData });
+    const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartQuery(user?.email, { skip: !fetchData });
 
     const dispatch = useAppDispatch();
 
@@ -104,10 +108,14 @@ export default function NavItems({ links }: { links: Link[]; }) {
         if (status === 'authenticated') {
             setFetchData(true);
         }
-        if (isSuccess && !isLoading) {
+        if (isWishlistSuccess && !isWishlistLoading) {
             dispatch(setInitialWishlists(initialWishlists.data));
         }
-    }, [dispatch, initialWishlists, isLoading, isSuccess, status]);
+
+        if (isCartSuccess && !isCartLoading) {
+            dispatch(setInitialCart(initialCart.data));
+        }
+    }, [dispatch, initialCart, initialWishlists, isCartLoading, isCartSuccess, isWishlistLoading, isWishlistSuccess, status]);
 
     return (
         <>
@@ -118,10 +126,14 @@ export default function NavItems({ links }: { links: Link[]; }) {
                     <CiSearch className="absolute right-2 top-2 text-lg" />
                 </div>
                 <Link href='/wishlists' className="relative">
-                    <span className="absolute -top-3 -right-2 px-[5px] py-[3xp] text-sm rounded-full bg-[#e11d48] text-white">{wishlists.length}</span>
+                    <NotifyBadge>{wishlists.length}</NotifyBadge>
                     <IoMdHeartEmpty className="text-2xl" />
                 </Link>
-                <IoCartOutline className="text-2xl" />
+                <Link href='/wishlists' className="relative">
+                    <NotifyBadge>{cart.length}</NotifyBadge>
+                    <IoCartOutline className="text-2xl" />
+                </Link>
+
                 {authContent}
             </div>
         </>
