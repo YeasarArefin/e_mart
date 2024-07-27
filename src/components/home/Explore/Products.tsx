@@ -6,12 +6,12 @@ import Product from "./Product";
 
 
 export async function getProducts(): Promise<ApiResponse> {
-    const response = await fetch(`https://exclusive-mart.vercel.app/api/products?limit=9`);
+    const response = await fetch(`http://localhost:3000/api/products?limit=9`);
     return response.json();
 }
 
 export default async function Products() {
-    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/products?limit=9`);
+    const { message, success, data } = await getQuery(`http://localhost:3000/api/products?limit=9`);
     const products: ProductType[] = data || [];
 
     let content;

@@ -33,7 +33,7 @@ const UserSchema: Schema<User> = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    cart: [{
+    wishlists: [{
         type: Schema.Types.ObjectId,
         ref: ProductModel.modelName
     }],
