@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/dbConnect";
-import sendResponse from "@/lib/sendResponse";
 import UserModel from "@/models/User";
 import bcrypt from 'bcryptjs';
 import { AuthOptions } from "next-auth";
@@ -19,20 +18,15 @@ export const authOptions: AuthOptions = {
             credentials: {},
             async authorize(credentials: any): Promise<any> {
                 dbConnect();
-                try {
-                    const user = await UserModel.findOne({ email: credentials.email });
-                    if (!user) return sendResponse(false, 'user not found', 404);
-                    if (!user.isVerified) return sendResponse(false, 'verify your account first', 401);
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-                    if (isPasswordCorrect) {
-                        return user;
-                    } else {
-                        throw new Error('incorrect password');
-                    }
-                } catch (error) {
-                    console.log("🚀 ~ authorize ~ error: /api/auth - wrong email/password", error);
-                    return sendResponse(false, 'wrong email/password', 400, error);
-                }
+                const user = await UserModel.findOne({ email: credentials.email });
+
+                if (!user) throw new Error("This email not exists");
+                if (!user.isVerified) throw new Error("You are not verified! Please sign-up again");
+                const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+
+                if (!isPasswordCorrect) throw new Error("Wrong Password!");
+
+                return user;
             }
         })
     ],

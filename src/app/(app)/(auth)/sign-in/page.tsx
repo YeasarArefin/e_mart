@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import SignInSchema from "@/schemas/signInSchema";
 import { SignInFormData } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,51 +25,24 @@ export default function Page() {
     const { toast } = useToast();
     const router = useRouter();
 
-    const { data: sessionData } = useSession();
-
     const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
 
         const result = await signIn('Credentials', {
             email: data.email,
             password: data.password,
-            redirect: true,
+            redirect: false,
             callbackUrl: '/'
         });
-        if (result?.error) {
-            if (result?.error === 'CredentialsSignin') {
-                toast({
-                    title: 'Login Failed',
-                    description: 'Incorrect Email or Password',
-                    variant: 'destructive'
-                });
-            } else {
-                toast({
-                    title: 'Error',
-                    description: result.error,
-                    variant: 'destructive'
-                });
-            }
+        const url = result?.url as string;
+        if (result?.ok) {
+            router.push(url);
+        } else {
+            toast({
+                title: 'Sign-in Failed',
+                description: result?.error,
+                variant: 'destructive'
+            });
         }
-        /* if (result?.error) {
-            if (result?.error === 'CredentialsSignin') {
-                toast({
-                    title: 'Login Failed',
-                    description: 'Incorrect Email or Password',
-                    variant: 'destructive'
-                });
-            } else {
-                toast({
-                    title: 'Error',
-                    description: result.error,
-                    variant: 'destructive'
-                });
-            }
-        }
-
-        if (result?.url) {
-            router.replace('/');
-        } */
-        console.log("🚀 ~ onSubmit ~ result:", result);
     };
 
     return (

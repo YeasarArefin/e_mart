@@ -54,11 +54,11 @@ export default function Page() {
             reset();
             router.replace(`/sign-in`);
         }
-        if (error) {
+        if (isError) {
             toast({
                 title: "Error",
                 variant: "destructive",
-                description: 'Failed to verify account',
+                description: "Wrong Verification Code!"
             });
         }
     }, [error, isError, isSuccess, reset, response, router, toast]);
