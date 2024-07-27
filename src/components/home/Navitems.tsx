@@ -8,8 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { useGetCartQuery, useGetWishListsQuery } from "@/features/api/apiSlice";
-import { setInitialCart } from "@/features/cart/cartSlice";
+import { useGetWishListsQuery } from "@/features/api/apiSlice";
 import { setInitialWishlists } from "@/features/wishlists/wishlistsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { cn } from "@/lib/utils";
@@ -39,7 +38,7 @@ export default function NavItems({ links }: { links: Link[]; }) {
     const [fetchData, setFetchData] = useState(false);
 
     const { data: initialWishlists, isError: isWishlistError, isLoading: isWishlistLoading, isSuccess: isWishlistSuccess } = useGetWishListsQuery(user?.email, { skip: !fetchData });
-    const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartQuery(user?.email, { skip: !fetchData });
+    // const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartQuery(user?.email, { skip: !fetchData });
 
     const dispatch = useAppDispatch();
 
@@ -112,10 +111,10 @@ export default function NavItems({ links }: { links: Link[]; }) {
             dispatch(setInitialWishlists(initialWishlists.data));
         }
 
-        if (isCartSuccess && !isCartLoading) {
-            dispatch(setInitialCart(initialCart.data));
-        }
-    }, [dispatch, initialCart, initialWishlists, isCartLoading, isCartSuccess, isWishlistLoading, isWishlistSuccess, status]);
+        // if (isCartSuccess && !isCartLoading) {
+        //     dispatch(setInitialCart(initialCart.data));
+        // }
+    }, [dispatch, initialWishlists, isWishlistLoading, isWishlistSuccess, status]);
 
     return (
         <>
