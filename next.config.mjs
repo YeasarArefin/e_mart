@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         domains: ['adminapi.applegadgetsbd.com']
     },
-    /* async headers() {
+    async headers() {
         return [
             {
                 // Routes this applies to
@@ -13,7 +13,7 @@ const nextConfig = {
                     // Allow for specific domains to have access or * for all
                     {
                         key: "Access-Control-Allow-Origin",
-                        value: "http://localhost:3000/",
+                        value: "https://exclusive-mart.vercel.app/",
                         // DOES NOT WORK
                         // value: process.env.ALLOWED_ORIGIN,
                     },
@@ -30,7 +30,7 @@ const nextConfig = {
                 ],
             },
         ];
-    }, */
+    },
 };
 
 export default nextConfig;

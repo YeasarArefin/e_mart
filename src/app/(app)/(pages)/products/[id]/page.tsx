@@ -5,7 +5,7 @@ import { Product } from "@/types/types";
 import Image from "next/image";
 
 export default async function page({ params }: any) {
-    const { message, success, data } = await getQuery(`http://localhost:3000/api/products?id=${params?.id}`);
+    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/products?id=${params?.id}`);
     const product: Product = data || {};
     const { images, brand, name, category, description, discount, price, stocks, rating, reviews, size } = product;
 
