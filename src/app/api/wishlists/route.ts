@@ -12,14 +12,14 @@ export async function POST(request: NextRequest) {
         const user = await UserModel.findById(userId);
         if (!user) return sendResponse(false, 'User not found', 404);
 
-        const index = user.cart.indexOf(productId);
+        const index = user.wishlists.indexOf(productId);
         if (index !== -1) {
-            user.cart.splice(index, 1);
+            user.wishlists.splice(index, 1);
         } else {
-            user.cart.push(productId);
+            user.wishlists.push(productId);
         }
         await user.save();
-        return sendResponse(true, index !== -1 ? 'Removed from wishlist successfully' : 'Added in wishlist successfully', 200);
+        return sendResponse(true, index !== -1 ? 'Removed from wishlist successfully' : 'Added is wishlist successfully', 200);
     } catch (error) {
         console.log("🚀 ~ POST ~ error: /api/wishlists - failed to update user wishlists", error);
         return sendResponse(false, 'Failed to update user wishlists', 400, error);

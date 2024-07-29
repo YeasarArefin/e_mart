@@ -62,6 +62,10 @@ export const ProductSchema: Schema<Product> = new mongoose.Schema({
     colors: {
         type: [String],
         default: []
+    },
+    cartQuantity: {
+        type: Number,
+        default: 0
     }
 },
     {

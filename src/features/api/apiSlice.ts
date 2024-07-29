@@ -30,14 +30,14 @@ export const apiSlice = createApi({
         }),
         getWishLists: builder.query({
             query: (email) => `/wishlists?email=${email}&property=false`,
-            keepUnusedDataFor: 300,
+            // keepUnusedDataFor: 300,
         }),
         getWishListsWithDetails: builder.query({
             query: (email) => `/wishlists?email=${email}&property=true`,
-            keepUnusedDataFor: 300,
+            // keepUnusedDataFor: 300,
             providesTags: ['Wishlists']
         }),
-        toggleCartApi: builder.mutation({
+        addToCartApi: builder.mutation({
             query: (data) => ({
                 url: `/cart`,
                 method: `POST`,
@@ -46,7 +46,10 @@ export const apiSlice = createApi({
         }),
         getCart: builder.query({
             query: (email) => `/cart?email=${email}&property=false`,
-        })
+        }),
+        getCartWithDetails: builder.query({
+            query: (email) => `/cart?email=${email}&property=true`,
+        }),
     })
 });
-export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useToggleCartApiMutation, useGetCartQuery } = apiSlice;
+export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery } = apiSlice;

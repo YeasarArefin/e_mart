@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export type Product = {
-    _id?: string;
+    _id: string;
     name: string,
     description: string,
     images: string[];
@@ -12,13 +12,14 @@ export type Product = {
     stocks: number,
     featured: boolean,
     brand: string,
+    cartQuantity: number,
     category: ObjectId,
     colors: string[],
     size: string[];
 };
 
 export type Category = {
-    _id?: string,
+    _id: string,
     name: string,
     image: string;
 };
@@ -30,7 +31,7 @@ export type Banner = {
 };
 
 export type Coupon = {
-    _id?: string,
+    _id: string,
     name: string,
     code: string,
     expiryDate: Date,
@@ -46,7 +47,7 @@ export type User = {
     isVerified: boolean,
     isAdmin: boolean,
     wishlists: ObjectId[],
-    cart: ObjectId[],
+    cart: Product[],
     usedCoupons: string[];
 };
 

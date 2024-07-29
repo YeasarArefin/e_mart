@@ -1,15 +1,15 @@
-import Wishlists from "@/components/wishlists/wishlists";
+import Cart from "@/components/cart/cart";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Wishlists | Exclusive Mart",
+    title: "Cart | Exclusive Mart",
     description: "Largest Online Store",
 };
 
 export default function page() {
     return (
         <div>
-            <Wishlists />
+            <Cart />
         </div>
     );
 }

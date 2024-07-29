@@ -6,7 +6,7 @@ import { useGetWishListsWithDetailsQuery } from "@/features/api/apiSlice";
 import { Product as ProductType } from "@/types/types";
 import { useSession } from "next-auth/react";
 
-export default function Page() {
+export default function Wishlists() {
     const { data: session, status } = useSession();
     const { data: response, isError, isLoading, isSuccess } = useGetWishListsWithDetailsQuery(session?.user.email, {
         skip: status === "authenticated" ? false : true

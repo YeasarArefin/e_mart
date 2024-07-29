@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { useGetCartQuery, useGetWishListsQuery } from "@/features/api/apiSlice";
+import { useGetCartWithDetailsQuery, useGetWishListsQuery } from "@/features/api/apiSlice";
 import { setInitialCart } from "@/features/cart/cartSlice";
 import { setInitialWishlists } from "@/features/wishlists/wishlistsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
@@ -35,11 +35,11 @@ export default function NavItems({ links }: { links: Link[]; }) {
     const { data, status } = useSession();
     const { user } = data || {};
     const wishlists = useAppSelector(state => state.wishlists.wishlists) || [];
-    const cart = useAppSelector(state => state.cart.cart) || [];
+    const totalItem = useAppSelector(state => state.cart.totalItems);
     const [fetchData, setFetchData] = useState(false);
 
     const { data: initialWishlists, isError: isWishlistError, isLoading: isWishlistLoading, isSuccess: isWishlistSuccess } = useGetWishListsQuery(user?.email, { skip: !fetchData });
-    const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartQuery(user?.email, { skip: !fetchData });
+    const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartWithDetailsQuery(user?.email, { skip: !fetchData });
 
     const dispatch = useAppDispatch();
 
@@ -129,8 +129,8 @@ export default function NavItems({ links }: { links: Link[]; }) {
                     <NotifyBadge>{wishlists.length}</NotifyBadge>
                     <IoMdHeartEmpty className="text-2xl" />
                 </Link>
-                <Link href='/wishlists' className="relative">
-                    <NotifyBadge>{cart.length}</NotifyBadge>
+                <Link href='/cart' className="relative">
+                    <NotifyBadge>{totalItem}</NotifyBadge>
                     <IoCartOutline className="text-2xl" />
                 </Link>
 

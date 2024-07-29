@@ -37,10 +37,7 @@ const UserSchema: Schema<User> = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: ProductModel.modelName
     }],
-    cart: [{
-        type: Schema.Types.ObjectId,
-        ref: ProductModel.modelName
-    }],
+    cart: [],
     usedCoupons: {
         type: [String],
         default: []

@@ -9,7 +9,9 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { BiLoaderAlt } from "react-icons/bi";
 import { z } from "zod";
 
 export default function Page() {
@@ -24,26 +26,31 @@ export default function Page() {
 
     const { toast } = useToast();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
-
+        setLoading(true);
         const result = await signIn('Credentials', {
             email: data.email,
             password: data.password,
             redirect: false,
             callbackUrl: '/'
         });
-        const url = result?.url as string;
         if (result?.ok) {
+            const url = result?.url as string;
+            setLoading(false);
             router.push(url);
         } else {
+            setLoading(false);
             toast({
                 title: 'Sign-in Failed',
                 description: result?.error,
                 variant: 'destructive'
             });
         }
+
     };
+
 
     return (
         <section>
@@ -105,10 +112,10 @@ export default function Page() {
                                 <div>
                                     <button
                                         type="submit"
-                                        disabled={isLoading}
+                                        disabled={loading}
                                         className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 disabled:hover:bg-black disabled:opacity-60 disabled:cursor-not-allowed"
                                     >
-                                        {isLoading ? 'Signing in...' : 'Sign in'}
+                                        {loading ? <span className="flex items-center gap-x-2"><BiLoaderAlt className="animate-spin" /> Signing in...</span> : 'Sign In'}
                                     </button>
                                 </div>
                             </div>
