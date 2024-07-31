@@ -2,41 +2,35 @@ import dbConnect from "@/lib/dbConnect";
 import sendResponse from "@/lib/sendResponse";
 import ProductModel from "@/models/Product";
 import UserModel from "@/models/User";
-import { Product } from "@/types/types";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
     dbConnect();
     try {
-        const { userId, productId } = await request.json() as { userId: string, productId: string; };
-        console.log("🚀 ~ POST ~ productId:", productId);
-        const user = await UserModel.findById(userId);
+        const { userId, productId, mode } = await request.json() as { userId: string, productId: string, mode: 'normal' | 'increase' | 'decrease'; };
+
+        let user = await UserModel.findById(userId);
         if (!user) return sendResponse(false, 'User not found', 404);
 
-        const product = user.cart.filter((pd) => pd._id === productId)[0] as Product;
-        if (product) {
-            product.cartQuantity += 1;
-            const newCart = [...user.cart, product];
-            user.cart = newCart;
-        } else {
-            const newProduct = await ProductModel.findById(productId) as Product;
-            user.cart.push(newProduct);
+        const productIndex = user.cart.findIndex((pd) => pd._id.toString() === productId);
+        if (mode === 'normal') {
+            if (productIndex > -1) {
+                user.cart[productIndex].cartQuantity += 1;
+            } else {
+                const product = await ProductModel.findById(productId);
+                if (!product) return sendResponse(false, 'Product not found', 404);
+                user.cart.push(product);
+            }
         }
-        await user.save();
-        return sendResponse(true, 'Added to cart successfully!', 200);
-        /*  const index = user.cart.indexOf(productId);
-         if (index !== -1) {
-             user.cart.splice(index, 1);
-         } else {
-             user.cart.push(productId);
-         }
-         await user.save();
-         return sendResponse(true, index !== -1 ? 'Removed from cart successfully' : 'Added in cart successfully', 200); */
+
+        await UserModel.findOneAndUpdate({ _id: userId }, user);
+        return sendResponse(true, (productIndex > -1 ? 'Product quantity updated successfully' : 'Added to Cart successfully'), 200);
 
     } catch (error) {
         console.log("🚀 ~ POST ~ error: /api/cart - failed to update user cart", error);
         return sendResponse(false, 'Failed to update user cart', 400, error);
     }
+
 }
 
 export async function GET(request: NextRequest) {

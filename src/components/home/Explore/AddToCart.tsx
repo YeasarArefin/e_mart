@@ -3,7 +3,6 @@ import { useAddToCartApiMutation } from "@/features/api/apiSlice";
 import { addToCart } from "@/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { Product } from "@/types/types";
-import mongoose from "mongoose";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { IoCartOutline } from "react-icons/io5";
@@ -20,7 +19,7 @@ export default function AddToCart({ _id, product, className, icon }: { _id: stri
 
 	const handleToggleCart = () => {
 		dispatch(addToCart(product));
-		addToCartApi({ userId, productId: new mongoose.Types.ObjectId(_id) });
+		addToCartApi({ userId, productId: _id, mode: 'normal' });
 	};
 
 	useEffect(() => {
