@@ -18,8 +18,8 @@ export default function AddToCart({ _id, product, className, icon }: { _id: stri
 	const { toast } = useToast();
 
 	const handleToggleCart = () => {
-		dispatch(addToCart(product));
-		addToCartApi({ userId, productId: _id, mode: 'normal' });
+		dispatch(addToCart({ product, quantity: 1 }));
+		addToCartApi({ userId, productId: _id, quantity: 1, mode: 'normal' });
 	};
 
 	useEffect(() => {

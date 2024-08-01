@@ -26,7 +26,7 @@ const cartSlice = createSlice({
             }
             state.totalItems = totalCartQuantity;
         },
-        addToCart: (state, action: PayloadAction<Product>) => {
+        /* addToCart: (state, action: PayloadAction<Product>) => {
             const product = state.cart.filter((pd) => pd._id === action.payload._id)[0] as Product;
             const clonedProduct = JSON.parse(JSON.stringify(action.payload));
             if (product) {
@@ -34,7 +34,27 @@ const cartSlice = createSlice({
             } else {
                 state.cart.push(clonedProduct);
             }
-            state.totalItems++;
+            let totalItems = 0;
+            for (let i = 0; i < state.cart.length; i++) {
+                const cartQuantity = state.cart[i].cartQuantity;
+                totalItems += cartQuantity;
+            }
+            state.totalItems = totalItems;
+        }, */
+        addToCart: (state, action: PayloadAction<{ product: Product, quantity: number; }>) => {
+            const product = state.cart.filter((pd) => pd._id === action.payload.product._id)[0] as Product;
+            const clonedProduct = JSON.parse(JSON.stringify(action.payload.product));
+            if (product) {
+                product.cartQuantity += action.payload.quantity;
+            } else {
+                state.cart.push(clonedProduct);
+            }
+            let totalItems = 0;
+            for (let i = 0; i < state.cart.length; i++) {
+                const cartQuantity = state.cart[i].cartQuantity;
+                totalItems += cartQuantity;
+            }
+            state.totalItems = totalItems;
         },
         increaseCart: (state, action: PayloadAction<string>) => {
             const productIndex = state.cart.findIndex((pd) => pd._id === action.payload);

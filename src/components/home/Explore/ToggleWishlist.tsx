@@ -44,9 +44,4 @@ export default function ToggleWishlist({ _id, className, icon }: { _id: string, 
             {icon === 'cancel' && <RxCross2 className="text-lg text-[#e11d48]" />}
         </button>
     );
-    // <button onClick={handleToggleWishlists} className={cn('p-2 rounded-full text-white border cursor-pointer lg:hover:bg-[#e11d48] lg:hover:text-white outline-none transition-all duration-100 bg-[#e11d48]', className, { 'bg-[#e11d48] text-white': existsInWishlist, 'bg-white text-black': !existsInWishlist })}>
-    //     {/* {icon === 'heart' && <IoMdHeartEmpty className="text-lg" />} */}
-    //     {icon === 'heart' && <IoMdHeart className="text-2xl text-red-600" />}
-    //     {icon === 'cancel' && <RxCross2 className="text-lg" />}
-    // </button>
 }

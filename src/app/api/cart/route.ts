@@ -7,7 +7,7 @@ import { NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
     dbConnect();
     try {
-        const { userId, productId, mode } = await request.json() as { userId: string, productId: string, mode: 'normal' | 'increase' | 'decrease'; };
+        const { userId, productId, quantity, mode } = await request.json() as { userId: string, productId: string, quantity: number, mode: 'normal' | 'increase' | 'decrease'; };
 
         let user = await UserModel.findById(userId);
         if (!user) return sendResponse(false, 'User not found', 404);
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         const productIndex = user.cart.findIndex((pd) => pd._id.toString() === productId);
         if (mode === 'normal') {
             if (productIndex > -1) {
-                user.cart[productIndex].cartQuantity += 1;
+                user.cart[productIndex].cartQuantity += quantity;
             } else {
                 const product = await ProductModel.findById(productId);
                 if (!product) return sendResponse(false, 'Product not found', 404);

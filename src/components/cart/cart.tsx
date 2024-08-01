@@ -1,6 +1,5 @@
 'use client';
 import Heading from "@/components/home/Heading";
-import { useGetCartWithDetailsQuery } from "@/features/api/apiSlice";
 import { useAppSelector } from "@/lib/hooks/hooks";
 import { useSession } from "next-auth/react";
 import CartCalculation from "./cart-calculation";
@@ -9,18 +8,16 @@ import SingleCart from "./single-cart";
 export default function Wishlists() {
     const cart = useAppSelector((state) => state.cart.cart) || [];
     const { data, status } = useSession();
-    const { data: initialCart, isError: isCartError, isLoading: isCartLoading, isSuccess: isCartSuccess } = useGetCartWithDetailsQuery(data?.user?.email);
 
     let content;
-    if (isCartLoading) {
+    if (status === 'loading' && cart.length === 0) {
         content = <h1>Loading...</h1>;
     } else {
 
-        if (cart.length === 0) {
-            content = <h1 className="font-semibold">No items in cart!</h1>;
-        }
         if (cart.length > 0) {
             content = cart.map((product) => <SingleCart key={product._id} product={product} />);
+        } else {
+            content = <h1 className="font-semibold">No items in cart!</h1>;
         }
     }
 
