@@ -17,7 +17,6 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         setInitialCart: (state, action: PayloadAction<Product[]>) => {
-            console.log("🚀 ~ action:", action.payload);
             state.cart = JSON.parse(JSON.stringify(action.payload));
             const cart = action.payload;
             let totalCartQuantity = 0;
@@ -26,21 +25,6 @@ const cartSlice = createSlice({
             }
             state.totalItems = totalCartQuantity;
         },
-        /* addToCart: (state, action: PayloadAction<Product>) => {
-            const product = state.cart.filter((pd) => pd._id === action.payload._id)[0] as Product;
-            const clonedProduct = JSON.parse(JSON.stringify(action.payload));
-            if (product) {
-                product.cartQuantity += 1;
-            } else {
-                state.cart.push(clonedProduct);
-            }
-            let totalItems = 0;
-            for (let i = 0; i < state.cart.length; i++) {
-                const cartQuantity = state.cart[i].cartQuantity;
-                totalItems += cartQuantity;
-            }
-            state.totalItems = totalItems;
-        }, */
         addToCart: (state, action: PayloadAction<{ product: Product, quantity: number; }>) => {
             const product = state.cart.filter((pd) => pd._id === action.payload.product._id)[0] as Product;
             const clonedProduct = JSON.parse(JSON.stringify(action.payload.product));
@@ -55,6 +39,9 @@ const cartSlice = createSlice({
                 totalItems += cartQuantity;
             }
             state.totalItems = totalItems;
+        },
+        removeFromCart: (state, action: PayloadAction<string>) => {
+            state.cart = state.cart.filter((pd) => pd._id !== action.payload);
         },
         increaseCart: (state, action: PayloadAction<string>) => {
             const productIndex = state.cart.findIndex((pd) => pd._id === action.payload);
@@ -71,5 +58,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { addToCart, setInitialCart, increaseCart, decreaseCart } = cartSlice.actions;
+export const { addToCart, setInitialCart, increaseCart, decreaseCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -9,6 +9,8 @@ export default function Wishlists() {
     const cart = useAppSelector((state) => state.cart.cart) || [];
     const { data, status } = useSession();
 
+
+
     let content;
     if (status === 'loading' && cart.length === 0) {
         content = <h1>Loading...</h1>;
