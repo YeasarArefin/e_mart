@@ -6,8 +6,8 @@ import { Product } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { IoCartOutline } from "react-icons/io5";
-
-export default function AddToCart({ _id, product, className, icon }: { _id: string, product: Product, className: string, icon: "cart" | "cancel"; }) {
+import { v4 as uuid } from 'uuid';
+export default function AddToCart({ _id, product }: { _id: string, product: Product, className: string, icon: "cart" | "cancel"; }) {
 
 	const cart = useAppSelector(state => state.cart.cart) || [];
 	const dispatch = useAppDispatch();
@@ -18,8 +18,9 @@ export default function AddToCart({ _id, product, className, icon }: { _id: stri
 	const { toast } = useToast();
 
 	const handleToggleCart = () => {
-		dispatch(addToCart({ product, quantity: 1 }));
-		addToCartApi({ userId, productId: _id, quantity: 1, mode: 'normal' });
+		const newProduct = { ...product, cartId: uuid(), colors: [product.colors[0]], size: [product.size[0]] };
+		dispatch(addToCart({ product: newProduct, quantity: 1 }));
+		addToCartApi({ userId, productId: _id, quantity: 1, color: product.colors[0], size: product.size[0], mode: 'normal' });
 	};
 
 	useEffect(() => {

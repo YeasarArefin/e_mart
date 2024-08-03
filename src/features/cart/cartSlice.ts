@@ -1,7 +1,6 @@
 import { Product } from '@/types/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-
 interface CartState {
     cart: Product[];
     totalItems: number;
@@ -28,7 +27,8 @@ const cartSlice = createSlice({
         addToCart: (state, action: PayloadAction<{ product: Product, quantity: number; }>) => {
             const product = state.cart.filter((pd) => pd._id === action.payload.product._id)[0] as Product;
             const clonedProduct = JSON.parse(JSON.stringify(action.payload.product));
-            if (product) {
+
+            if (JSON.stringify(product) === JSON.stringify(action.payload.product)) {
                 product.cartQuantity += action.payload.quantity;
             } else {
                 state.cart.push(clonedProduct);
@@ -42,6 +42,7 @@ const cartSlice = createSlice({
         },
         removeFromCart: (state, action: PayloadAction<string>) => {
             state.cart = state.cart.filter((pd) => pd._id !== action.payload);
+            state.totalItems--;
         },
         increaseCart: (state, action: PayloadAction<string>) => {
             const productIndex = state.cart.findIndex((pd) => pd._id === action.payload);

@@ -4,7 +4,7 @@ import { Product as ProductType } from "@/types/types";
 
 export default async function page({ params }: any) {
     const _id = params?.id as string;
-    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/products?id=${_id}`);
+    const { message, success, data } = await getQuery(`http://localhost:3000/api/products?id=${_id}`);
     const product: ProductType = data || {};
 
     return (

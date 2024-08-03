@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://exclusive-mart.vercel.app/api'
+        baseUrl: 'http://localhost:3000/api'
     }),
     tagTypes: ['Wishlists'],
     endpoints: (builder) => ({
