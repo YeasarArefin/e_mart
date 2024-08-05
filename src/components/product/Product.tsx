@@ -6,6 +6,7 @@ import { Product as ProductType } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import ToggleWishlist from '../home/Explore/ToggleWishlist';
 import { Button } from '../ui/button';
 import Rating from '../ui/rating';
@@ -24,9 +25,10 @@ export default function Product({ product }: { product: ProductType; }) {
     const userId = session?.user._id;
 
     const handleAddToCart = () => {
-        const newProduct = { ...product, colors: [selectedColor], size: [selectedSize], cartQuantity: productQuantity };
+        const cartId = uuid();
+        const newProduct = { ...product, cartId, colors: [selectedColor], size: [selectedSize], cartQuantity: productQuantity };
         dispatch(addToCart({ product: newProduct, quantity: productQuantity }));
-        addToCartApi({ userId, productId: _id, quantity: productQuantity, color: selectedColor, size: selectedSize, mode: 'normal' });
+        addToCartApi({ userId, productId: _id, cartId, quantity: productQuantity, color: selectedColor, size: selectedSize, mode: 'add' });
     };
 
     useEffect(() => {

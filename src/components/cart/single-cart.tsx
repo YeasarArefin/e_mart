@@ -11,7 +11,7 @@ import CartQuantityController from "./cart-quantity-controller";
 
 export default function SingleCart({ product }: { product: ProductType; }) {
 
-    const { _id, images, price, cartQuantity, name, colors, size } = product || {};
+    const { _id, images, price, cartQuantity, name, colors, size, cartId } = product || {};
     const subtotal = price * cartQuantity;
     const dispatch = useAppDispatch();
     const [addToCartApi, { }] = useAddToCartApiMutation();
@@ -19,9 +19,9 @@ export default function SingleCart({ product }: { product: ProductType; }) {
     const { user } = data || {};
     const userId = user?._id;
 
-    const handleRemoveFromCart = (productId) => {
-        dispatch(removeFromCart(productId));
-        addToCartApi({ userId, productId: _id, quantity: 1, mode: 'remove' });
+    const handleRemoveFromCart = () => {
+        cartId && dispatch(removeFromCart(cartId));
+        addToCartApi({ userId, productId: _id, cartId, quantity: 1, mode: 'remove' });
     };
 
     return (
@@ -39,9 +39,9 @@ export default function SingleCart({ product }: { product: ProductType; }) {
                 </div>
             </div>
             <h1>${price}</h1>
-            <CartQuantityController _id={_id || ''} cartQuantity={cartQuantity} />
+            <CartQuantityController cartId={cartId || ''} cartQuantity={cartQuantity} />
             <h1>${subtotal}</h1>
-            <Button onClick={() => handleRemoveFromCart(_id)} className="rounded-full hover:bg-[#e11d48] bg-[#e11d48] px-2.5 py-1.5"><RxCross2 className="text-lg " /></Button>
+            <Button onClick={handleRemoveFromCart} className="rounded-full hover:bg-[#e11d48] bg-[#e11d48] px-2.5 py-1.5"><RxCross2 className="text-lg " /></Button>
         </div>
     );
 }

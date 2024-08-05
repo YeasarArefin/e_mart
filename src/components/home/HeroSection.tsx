@@ -4,12 +4,12 @@ import { Category } from "@/types/types";
 import { HeroSlider } from "./HeroSlider";
 
 export async function getCategories(): Promise<ApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/categories`);
+    const response = await fetch(`https://exclusive-mart.vercel.app/api/categories`);
     return response.json();
 }
 
 export default async function HeroSection() {
-    const { message, success, data } = await getQuery(`http://localhost:3000/api/categories`);
+    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/categories`);
     const categories: Category[] = data || [];
     return (
         <section className="grid grid-cols-8 mb-[80px]">

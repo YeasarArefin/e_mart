@@ -18,9 +18,11 @@ export default function AddToCart({ _id, product }: { _id: string, product: Prod
 	const { toast } = useToast();
 
 	const handleToggleCart = () => {
-		const newProduct = { ...product, cartId: uuid(), colors: [product.colors[0]], size: [product.size[0]] };
+		const cartId = uuid();
+		const newProduct = { ...product, cartId, colors: [product.colors[0]], size: [product.size[0]] };
+		const apiPayload = { userId, productId: _id, cartId, quantity: 1, color: product.colors[0], size: product.size[0], mode: 'add' };
 		dispatch(addToCart({ product: newProduct, quantity: 1 }));
-		addToCartApi({ userId, productId: _id, quantity: 1, color: product.colors[0], size: product.size[0], mode: 'normal' });
+		addToCartApi(apiPayload);
 	};
 
 	useEffect(() => {
@@ -30,9 +32,7 @@ export default function AddToCart({ _id, product }: { _id: string, product: Prod
 				description: data?.message,
 			});
 		}
-		// if (isError) {
-		// dispatch(toggleCart(_id));
-		// }
+
 	}, [_id, data, dispatch, isError, isLoading, isSuccess, toast]);
 
 	return (

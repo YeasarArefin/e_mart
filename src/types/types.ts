@@ -1,7 +1,8 @@
 import { ObjectId } from "mongoose";
 
 export type Product = {
-    _id: string;
+    _id: string,
+    cartId?: string,
     name: string,
     description: string,
     images: string[];

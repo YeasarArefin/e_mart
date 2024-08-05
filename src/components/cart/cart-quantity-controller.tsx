@@ -1,26 +1,30 @@
 'use client';
 import { useAddToCartApiMutation } from "@/features/api/apiSlice";
 import { decreaseCart, increaseCart } from "@/features/cart/cartSlice";
-import { useAppDispatch } from "@/lib/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 
-export default function CartQuantityController({ _id, cartQuantity }: { _id: string, cartQuantity: number; }) {
+export default function CartQuantityController({ cartId, cartQuantity }: { cartId: string, cartQuantity: number; }) {
 
 	const [addToCartApi, { }] = useAddToCartApiMutation();
 	const dispatch = useAppDispatch();
 	const { data } = useSession();
 	const { user } = data || {};
 	const userId = user?._id;
+	const cart = useAppSelector((state) => state.cart.cart);
 
 	const handelIncreaseCartQuantity = () => {
-		dispatch(increaseCart(_id));
-		addToCartApi({ userId, productId: _id, quantity: 1, mode: 'increase' });
+		dispatch(increaseCart(cartId));
+		addToCartApi({ userId, cartId, quantity: 1, mode: 'increase' });
 	};
 
 	const handelDecreaseCartQuantity = () => {
-		dispatch(decreaseCart(_id));
-		addToCartApi({ userId, productId: _id, quantity: 1, mode: 'decrease' });
+		const productQuantity = cart.filter((pd) => pd.cartId === cartId)[0].cartQuantity;
+		if (productQuantity > 1) {
+			dispatch(decreaseCart(cartId));
+			addToCartApi({ userId, cartId, quantity: 1, mode: 'decrease' });
+		}
 	};
 
 	return (

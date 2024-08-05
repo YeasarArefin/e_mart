@@ -66,6 +66,10 @@ export const ProductSchema: Schema<Product> = new mongoose.Schema({
     cartQuantity: {
         type: Number,
         default: 0
+    },
+    cartId: {
+        type: String,
+        default: ''
     }
 },
     {
