@@ -40,7 +40,7 @@ export default function Wishlists() {
                         {content}
                     </div>
                 </div>
-                <div className="col-span-1 border rounded-lg h-[300px]">
+                <div className="col-span-1 border rounded-lg h-[350px]">
                     <CartCalculation />
                 </div>
             </div>

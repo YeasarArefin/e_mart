@@ -1,8 +1,9 @@
+import { appUrl } from '@/constants/appUrl';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://exclusive-mart.vercel.app/api'
+        baseUrl: `${appUrl}api`
     }),
     tagTypes: ['Wishlists'],
     endpoints: (builder) => ({
@@ -50,6 +51,9 @@ export const apiSlice = createApi({
         getCartWithDetails: builder.query({
             query: (email) => `/cart?email=${email}&property=true`,
         }),
+        getCoupon: builder.query({
+            query: (code) => `/coupons?code=${code}`
+        })
     })
 });
-export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery } = apiSlice;
+export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery, useGetCouponQuery } = apiSlice;

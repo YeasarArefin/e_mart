@@ -22,12 +22,21 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const code = searchParams.get('code');
         if (code) {
-            const coupon = await CouponModel.findOne({ code });
-            if (!coupon) return sendResponse(false, 'coupon not found', 404);
+            const singleCoupon = await CouponModel.findOne({ code });
+            if (!singleCoupon) return sendResponse(false, 'coupon not found', 404);
 
-            const isNotExpiredCode = coupon.expiryDate > new Date();
-            if (isNotExpiredCode) sendResponse(true, 'coupon', 200, coupon);
-            return sendResponse(false, 'coupon expired', 400);
+            const isExpired = new Date() > new Date(singleCoupon.expiryDate);
+            console.log("🚀 ~ GET ~ expired:", isExpired);
+            console.log(new Date(singleCoupon.expiryDate));
+            console.log(new Date);
+
+            if (isExpired) {
+                return sendResponse(false, 'coupon expired', 400);
+
+            } else {
+                return sendResponse(true, 'coupon', 200, singleCoupon);
+            }
+
         }
         const coupon = await CouponModel.find({});
         return sendResponse(true, 'coupon sent successfully', 200, coupon);

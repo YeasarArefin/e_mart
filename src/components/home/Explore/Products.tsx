@@ -1,4 +1,5 @@
 import Error from "@/components/ui/error";
+import { appUrl } from "@/constants/appUrl";
 import getQuery from "@/lib/queries/getQueries";
 import { ApiResponse } from "@/types/ApiResponse";
 import { Product as ProductType } from "@/types/types";
@@ -6,12 +7,12 @@ import Product from "./Product";
 
 
 export async function getProducts(): Promise<ApiResponse> {
-    const response = await fetch(`https://exclusive-mart.vercel.app/api/products?limit=9`);
+    const response = await fetch(`${appUrl}api/products?limit=9`);
     return response.json();
 }
 
 export default async function Products() {
-    const { message, success, data } = await getQuery(`https://exclusive-mart.vercel.app/api/products?limit=9`);
+    const { message, success, data } = await getQuery(`${appUrl}api/products?limit=9`);
     const products: ProductType[] = data || [];
 
     let content;

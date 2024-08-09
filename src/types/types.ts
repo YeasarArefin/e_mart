@@ -79,3 +79,7 @@ export type VerificationCodeFromData = {
     email: string;
     verificationCode: string;
 };
+
+export type CouponData = {
+    coupon: string;
+};
