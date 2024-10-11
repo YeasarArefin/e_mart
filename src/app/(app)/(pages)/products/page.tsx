@@ -107,7 +107,7 @@ export default function Page() {
 
                     <div className="col-span-3">
                         <div className="grid grid-cols-3 gap-5">
-                            {products.length > 0 && products.map(pd => <Product product={pd} />)}
+                            {products.length > 0 && products.map(pd => <Product key={pd._id} product={pd} />)}
                         </div>
                     </div>
                 </div>
