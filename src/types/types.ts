@@ -86,6 +86,6 @@ export type CouponData = {
 
 export type QueryObject = {
     name: Object,
-    brand: string,
-    category: string,
+    brand: Object,
+    category: Object,
 };

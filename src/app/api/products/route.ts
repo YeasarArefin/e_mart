@@ -17,44 +17,6 @@ export async function POST(request: NextRequest) {
     }
 }
 
-// export async function GET(request: NextRequest) {
-//     dbConnect();
-//     try {
-//         const { searchParams } = new URL(request.url);
-//         const _id = searchParams.get('id');
-//         const page = Number(searchParams.get('page')) || 1;
-//         const limit = Number(searchParams.get('limit')) || 10;
-//         const category = searchParams.get('category');
-//         const brand = searchParams.get('brand');
-//         const name = searchParams.get('name');
-//         const skip = (page - 1) * limit;
-
-//         const queryObject = {} as QueryObject;
-
-//         if (name) {
-//             queryObject.name = { $regex: name, $options: "i" };
-//         }
-//         if (brand) {
-//             queryObject.brand = brand;
-//         }
-//         if (category) {
-//             queryObject.category = category;
-//         }
-
-//         if (_id) {
-//             const product = await ProductModel.findById(_id).populate('category', 'name image -_id');
-//             if (product) return sendResponse(true, 'product sent successfully', 200, product);
-//             return sendResponse(false, 'product not found', 404);
-//         }
-//         const products = await ProductModel.find(queryObject).populate('category', 'name image -_id').skip(skip).limit(limit);
-//         return sendResponse(true, `products sent successfully - items : ${products?.length}`, 200, products);
-//     } catch (error) {
-//         console.log("🚀 ~ GET ~ error: /api/products - error sending product", error);
-//         return sendResponse(false, 'error sending product', 500, error);
-//     }
-// }
-
-
 export async function GET(request: NextRequest) {
     await dbConnect();
     try {
