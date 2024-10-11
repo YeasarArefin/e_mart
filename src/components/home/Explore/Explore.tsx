@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Heading from "../Heading";
 import Products from "./Products";
 
@@ -12,7 +13,9 @@ export default function Todays() {
                 <Products />
             </div>
             <div className="flex justify-center">
-                <Button size="lg" className="bg-[#e11d48]">View All Products</Button>
+                <Link href={'/products'}>
+                    <Button size="lg" className="bg-[#e11d48]">View All Products</Button>
+                </Link>
             </div>
         </section>
     );

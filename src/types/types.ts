@@ -83,3 +83,9 @@ export type VerificationCodeFromData = {
 export type CouponData = {
     coupon: string;
 };
+
+export type QueryObject = {
+    name: Object,
+    brand: string,
+    category: string,
+};
