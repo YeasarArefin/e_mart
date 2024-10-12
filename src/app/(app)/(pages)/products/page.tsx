@@ -2,15 +2,13 @@
 import Product from "@/components/home/Explore/Product";
 import { Input } from "@/components/ui/input";
 import { Product as ProductType } from "@/types/types";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { useDebounceCallback } from 'usehooks-ts';
 
 export default function Page() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-
     const [brandFilters, setBrandFilters] = useState<string[]>([]);
     const [categoryFilters, setCategoryFilters] = useState<string[]>([]);
     const [name, setName] = useState<string>('');
@@ -42,24 +40,15 @@ export default function Page() {
     };
 
     useEffect(() => {
-        // Build query string for brands
         const brandQuery = brandFilters.length > 0 ? `brand=${brandFilters.join(',')}` : '';
-
-        // Build query string for categories
         const categoryQuery = categoryFilters.length > 0 ? `category=${categoryFilters.join(',')}` : '';
-
-        // Combine the query strings
         let query = [brandQuery, categoryQuery].filter(Boolean).join('&');
 
-        // Add search term to the query if it exists
         if (name.length > 0) {
             query = query ? `${query}&name=${name}` : `name=${name}`;
         }
 
-        // Push the new query params to the URL
         router.push(`?${query}`, undefined);
-
-        // Fetch filtered products based on the query
         fetch(`http://localhost:3000/api/products?${query}`)
             .then((res) => res.json())
             .then((productResponse) => setProducts(productResponse.data));
