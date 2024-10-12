@@ -1,6 +1,7 @@
 'use client';
 import Product from "@/components/home/Explore/Product";
 import { Input } from "@/components/ui/input";
+import { appUrl } from "@/constants/appUrl";
 import { Product as ProductType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -49,7 +50,7 @@ export default function Page() {
         }
 
         router.push(`?${query}`, undefined);
-        fetch(`http://localhost:3000/api/products?${query}`)
+        fetch(`${appUrl}api/products?${query}`)
             .then((res) => res.json())
             .then((productResponse) => setProducts(productResponse.data));
 
