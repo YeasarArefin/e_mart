@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
-const appUrl = 'http://localhost:3000/';
-// const appUrl = 'https://exclusive-mart.vercel.app/';
+// const appUrl = 'http://localhost:3000/';
+const appUrl = 'https://exclusive-mart.vercel.app/';
 const nextConfig = {
     images: {
         domains: ['adminapi.applegadgetsbd.com']
