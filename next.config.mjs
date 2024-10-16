@@ -1,13 +1,6 @@
 /** @type {import('next').NextConfig} */
-
-let appUrl;
-if (process.env.NODE_ENV === 'development') {
-    appUrl = 'http://localhost:3000/';
-}
-if (process.env.NODE_ENV === 'production') {
-    appUrl = 'https://exclusive-mart.vercel.app/';
-}
-
+// const appUrl = 'http://localhost:3000/';
+const appUrl = 'https://exclusive-mart.vercel.app/';
 const nextConfig = {
     images: {
         domains: ['adminapi.applegadgetsbd.com']
