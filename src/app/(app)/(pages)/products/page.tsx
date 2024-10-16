@@ -1,5 +1,7 @@
 'use client';
+import Product from "@/components/home/Explore/Product";
 import { Input } from "@/components/ui/input";
+import { useGetProductsQuery } from "@/features/api/apiSlice";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,7 +54,7 @@ export default function Page() {
         if (searchTerm) {
             setName(searchTerm);
         }
-    }, [searchParams]);
+    }, []);
 
     // Build query string for the RTK query
     const brandQuery = brandFilters.length > 0 ? `brand=${brandFilters.join(',')}&` : '';
@@ -65,9 +67,7 @@ export default function Page() {
 
     query += `&page=1&limit=9`;
 
-    // const { data: products, isLoading } = useGetProductsQuery(query);
-
-    const products = [];
+    const { data: products, isLoading } = useGetProductsQuery(query);
 
     return (
         <section>
@@ -110,9 +110,9 @@ export default function Page() {
 
                     <div className="col-span-3">
                         <div className="grid grid-cols-3 gap-5">
-                            {/* {isLoading && <div>Loading...</div>} */}
-                            {/* {products?.data.length == 0 && <h1>No Items</h1>} */}
-                            {/* {products?.data.length > 0 && products.data.map(pd => <Product key={pd._id} product={pd} />)} */}
+                            {isLoading && <div>Loading...</div>}
+                            {products?.data.length == 0 && <h1>No Items</h1>}
+                            {products?.data.length > 0 && products.data.map(pd => <Product key={pd._id} product={pd} />)}
                         </div>
 
                     </div>
