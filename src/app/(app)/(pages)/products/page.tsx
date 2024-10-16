@@ -126,7 +126,7 @@ import Product from "@/components/home/Explore/Product";
 import { Input } from "@/components/ui/input";
 import { useGetProductsQuery } from "@/features/api/apiSlice"; // import the hook
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { useDebounceCallback } from 'usehooks-ts';
 
@@ -187,7 +187,7 @@ export default function Page() {
     }, [brandFilters, categoryFilters, name, router]);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <div>
             <div>
                 <div className="grid grid-cols-4 gap-5">
                     <div className="col-span-1">
@@ -234,6 +234,6 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-        </ Suspense>
+        </ div>
     );
 };
