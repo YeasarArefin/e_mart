@@ -14,7 +14,7 @@ export default function Todays() {
             </div>
             <div className="flex justify-center">
                 <Link href={'/products'}>
-                    <Button size="lg" className="bg-[#e11d48]">View All Products</Button>
+                    <Button size="lg" className="bg-primary_red">View All Products</Button>
                 </Link>
             </div>
         </section>

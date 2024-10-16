@@ -1,2 +1,7 @@
-// export const appUrl = 'http://localhost:3000/';
-export const appUrl = 'https://exclusive-mart.vercel.app/';
+export let appUrl;
+if (process.env.NODE_ENV === 'development') {
+    appUrl = 'http://localhost:3000/';
+}
+if (process.env.NODE_ENV === 'production') {
+    appUrl = 'https://exclusive-mart.vercel.app/';
+}

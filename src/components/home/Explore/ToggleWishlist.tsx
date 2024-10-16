@@ -40,8 +40,8 @@ export default function ToggleWishlist({ _id, className, icon }: { _id: string, 
     return (
         <button onClick={handleToggleWishlists} className={cn('p-2 rounded-full text-white border border-gray-200 cursor-pointer lg:hover:text-white outline-none transition-all duration-100', className)}>
 
-            {icon === 'heart' && (existsInWishlist ? <IoMdHeart className="text-2xl text-[#e11d48]" /> : <IoMdHeartEmpty className="text-2xl text-[#e11d48]" />)}
-            {icon === 'cancel' && <RxCross2 className="text-lg text-[#e11d48]" />}
+            {icon === 'heart' && (existsInWishlist ? <IoMdHeart className="text-2xl text-primary_red" /> : <IoMdHeartEmpty className="text-2xl text-primary_red" />)}
+            {icon === 'cancel' && <RxCross2 className="text-lg text-primary_red" />}
         </button>
     );
 }

@@ -54,7 +54,7 @@ export default function Product({ product }: { product: ProductType; }) {
                         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                             <div className="flex items-center gap-x-2">
                                 <span className="mr-3 font-bold">Color</span>
-                                {colors?.map((color) => <Button key={color} onClick={() => setSelectedColor(color)} variant="outline" size="sm" className={`capitalize border-2 ${selectedColor === color && 'border-[#e11d48]'}`}>{color}</Button>)}
+                                {colors?.map((color) => <Button key={color} onClick={() => setSelectedColor(color)} variant="outline" size="sm" className={`capitalize border-2 ${selectedColor === color && 'border-primary_red'}`}>{color}</Button>)}
                             </div>
                             <div className="flex ml-6 items-center">
                                 <span className="mr-3 font-bold">Size</span>
@@ -78,7 +78,7 @@ export default function Product({ product }: { product: ProductType; }) {
                                 <ProductQuantityController productQuantity={productQuantity} setProductQuantity={setProductQuantity} />
                             </div>
                             <div className="flex gap-x-5 items-center">
-                                <Button onClick={handleAddToCart} className="bg-[#e11d48]">Add To Cart</Button>
+                                <Button onClick={handleAddToCart} className="bg-primary_red">Add To Cart</Button>
                                 <div>
                                     <ToggleWishlist _id={_id || ''} icon="heart" />
                                 </div>

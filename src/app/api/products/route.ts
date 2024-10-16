@@ -18,18 +18,24 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-    await dbConnect();
+    dbConnect();
     try {
         const { searchParams } = new URL(request.url);
         const _id = searchParams.get('id');
+        const count = searchParams.get('count');
         const page = Number(searchParams.get('page')) || 1;
         const limit = Number(searchParams.get('limit')) || 10;
         const category = searchParams.get('category');
         const brand = searchParams.get('brand');
         const name = searchParams.get('name');
+        const productsCount = await ProductModel.estimatedDocumentCount();
         const skip = (page - 1) * limit;
 
         const queryObject = {} as QueryObject;
+
+        if (count) {
+            return sendResponse(true, 'count sent successfully', 404, { count: productsCount });
+        }
 
         // Name filter (case-insensitive search)
         if (name) {
@@ -67,7 +73,7 @@ export async function GET(request: NextRequest) {
             .skip(skip)
             .limit(limit);
 
-        return sendResponse(true, `products sent successfully - items : ${products?.length}`, 200, products);
+        return sendResponse(true, `products sent successfully - items : ${products?.length} , document count : ${productsCount}`, 200, products);
     } catch (error) {
         console.log("🚀 ~ GET ~ error: /api/products - error sending product", error);
         return sendResponse(false, 'error sending product', 500, error);

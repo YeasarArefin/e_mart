@@ -41,7 +41,7 @@ export default function SingleCart({ product }: { product: ProductType; }) {
             <h1>${price}</h1>
             <CartQuantityController cartId={cartId || ''} cartQuantity={cartQuantity} />
             <h1>${subtotal}</h1>
-            <Button onClick={handleRemoveFromCart} className="rounded-full hover:bg-[#e11d48] bg-[#e11d48] px-2.5 py-1.5"><RxCross2 className="text-lg " /></Button>
+            <Button onClick={handleRemoveFromCart} className="rounded-full hover:bg-primary_red bg-primary_red px-2.5 py-1.5"><RxCross2 className="text-lg " /></Button>
         </div>
     );
 }

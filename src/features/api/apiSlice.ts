@@ -53,7 +53,13 @@ export const apiSlice = createApi({
         }),
         getCoupon: builder.query({
             query: (code) => `/coupons?code=${code}`
+        }),
+        getProducts: builder.query({
+            query: (query) => `/products?${query}`
+        }),
+        searchProducts: builder.query({
+            query: (name) => `/products?name=${name}`
         })
     })
 });
-export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery, useGetCouponQuery } = apiSlice;
+export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery, useGetCouponQuery, useGetProductsQuery, useSearchProductsQuery } = apiSlice;

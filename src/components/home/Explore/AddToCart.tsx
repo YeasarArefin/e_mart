@@ -36,7 +36,7 @@ export default function AddToCart({ _id, product }: { _id: string, product: Prod
 	}, [_id, data, dispatch, isError, isLoading, isSuccess, toast]);
 
 	return (
-		<button onClick={handleToggleCart} className="flex border w-full justify-center items-center gap-x-2 py-[8px] rounded-lg bg-[#e11d48] text-white">
+		<button onClick={handleToggleCart} className="flex border w-full justify-center items-center gap-x-2 py-[8px] rounded-lg bg-primary_red text-white">
 			<IoCartOutline className="text-xl" />
 			Add To Cart
 		</button>

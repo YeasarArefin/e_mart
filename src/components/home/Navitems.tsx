@@ -23,8 +23,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { PiSignOut } from "react-icons/pi";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import NotifyBadge from "../ui/notify-badge";
+import NavSearch from "./NavSearch";
 type Link = {
     name: string,
     to: string;
@@ -122,7 +122,7 @@ export default function NavItems({ links }: { links: Link[]; }) {
             {items}
             <div className="hidden md:flex items-center gap-x-5">
                 <div className="flex relative">
-                    <Input type="text" placeholder="What are you looking for" className="bg-[#F5F5F5]" />
+                    <NavSearch />
                     <CiSearch className="absolute right-2 top-2 text-lg" />
                 </div>
                 <Link href='/wishlists' className="relative">

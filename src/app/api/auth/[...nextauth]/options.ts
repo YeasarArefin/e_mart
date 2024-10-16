@@ -32,6 +32,7 @@ export const authOptions: AuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
+            console.log("🚀 ~ jwt ~ token:", JSON.stringify(token));
             if (user) {
                 token._id = user._id?.toString(); // Convert ObjectId to string
                 token.name = user.name;
@@ -41,6 +42,7 @@ export const authOptions: AuthOptions = {
             return token;
         },
         async session({ session, token }) {
+            console.log("🚀 ~ jwt ~ token:", JSON.stringify(token));
             if (token) {
                 session.user._id = token._id;
                 session.user.isVerified = token.isVerified;

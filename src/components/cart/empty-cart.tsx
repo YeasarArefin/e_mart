@@ -9,7 +9,7 @@ export default function EmptyCart() {
             <h1 className="font-semibold">No items in cart!</h1>
             <Image src={addToCartGif} width={350} height={350} alt="add to cart" />
             <Link href={'/'}>
-                <Button className="bg-[#e11d48]">Shop Now</Button>
+                <Button className="bg-primary_red">Shop Now</Button>
             </Link>
         </div>
     );
