@@ -9,7 +9,7 @@ import ToggleWishlist from "./ToggleWishlist";
 export default function Product({ product }: { product: ProductType; }) {
     const { _id, name, price, rating, reviews, images, discount } = product || {};
     return (
-        <div className="w-[300px] mx-auto border p-5 rounded-xl hover:shadow-2xl transition-all duration-150 relative">
+        <div className="w-full md:w-[300px] mx-auto border p-5 rounded-xl hover:shadow-2xl transition-all duration-150 relative">
             <Image src={images[0]} width={250} height={250} alt="product_pic" />
             <div className="flex flex-col gap-y-1">
                 <Link href={`/products/${_id}`} className="font-bold hover:underline">{name}</Link>
