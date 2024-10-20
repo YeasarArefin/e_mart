@@ -6,14 +6,13 @@ import { SignInFormData } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { z } from "zod";
 
 export default function SignInFrom() {
-    const path = usePathname();
+
     const { register, handleSubmit, formState: { errors, isLoading }, reset } = useForm<SignInFormData>({
         resolver: zodResolver(SignInSchema),
         defaultValues: {
@@ -23,7 +22,6 @@ export default function SignInFrom() {
     });
 
     const { toast } = useToast();
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
@@ -37,7 +35,8 @@ export default function SignInFrom() {
         if (result?.ok) {
             const url = result?.url as string;
             setLoading(false);
-            router.push(url);
+            window.location.href = '/';
+            // router.push(url); // replaced the router for unpredictable behavior
         } else {
             setLoading(false);
             toast({
