@@ -59,7 +59,10 @@ export const apiSlice = createApi({
         }),
         searchProducts: builder.query({
             query: (name) => `/products?name=${name}`
-        })
+        }),
+        getProductsCount: builder.query({
+            query: () => `/products?count=true`
+        }),
     })
 });
-export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery, useGetCouponQuery, useGetProductsQuery, useSearchProductsQuery } = apiSlice;
+export const { useSignUpMutation, useVerifyCodeMutation, useToggleWishlistsApiMutation, useGetWishListsQuery, useGetWishListsWithDetailsQuery, useAddToCartApiMutation, useGetCartQuery, useGetCartWithDetailsQuery, useGetCouponQuery, useGetProductsQuery, useSearchProductsQuery, useGetProductsCountQuery } = apiSlice;

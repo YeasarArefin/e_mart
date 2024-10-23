@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         const queryObject = {} as QueryObject;
 
         if (count) {
-            return sendResponse(true, 'count sent successfully', 404, { count: productsCount });
+            return sendResponse(true, 'count sent successfully', 200, productsCount);
         }
 
         // Name filter (case-insensitive search)
