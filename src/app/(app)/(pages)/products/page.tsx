@@ -1,5 +1,6 @@
 'use client';
 import Product from "@/components/home/Explore/Product";
+import ProductLoader from "@/components/product/ProductLoader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetProductsCountQuery, useGetProductsQuery } from "@/features/api/apiSlice";
@@ -100,6 +101,50 @@ export default function Page() {
         router.push(`?${query}`, undefined);
     }, [brandFilters, categoryFilters, name, currentPage, itemsPerPage, router, query]);
 
+    let content;
+    if (isLoading) {
+        content = <ProductLoader count={itemsPerPage} />;
+    }
+    if (!isLoading && isSuccess) {
+        content = <>
+            {isSuccess && <h1 className="px-4 mb-2">Items Found : <span className="text-primary_red font-semibold">{products?.data.length || 0}</span></h1>}
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                {isLoading && <div>Loading...</div>}
+                {products?.data?.length == 0 && <h1>No Items</h1>}
+                {products?.data?.length > 0 && products?.data.map(pd => <Product key={pd._id} product={pd} />)}
+            </div>
+            {isSuccess && <div className="flex justify-center my-20">
+                <div className="flex flex-col">
+                    <h1 className="text-center mb-5">Current Page : <span className="text-primary_red font-semibold">{currentPage}</span></h1>
+                    <div className="flex gap-x-2">
+                        <Button onClick={handlePreviousPage} className="bg-primary_red hover:bg-primary_red">Prev</Button>
+                        {
+                            pages.map(page => {
+                                const correctPage = page + 1;
+                                return (
+                                    <Button
+                                        key={correctPage}
+                                        onClick={() => setCurrentPage(correctPage)}
+                                        className={cn("bg-white hover:bg-primary_red hover:text-white text-primary_red border border-primary_red font-semibold", "", { "bg-primary_red text-white": correctPage === currentPage })}>{correctPage}
+                                    </Button>
+                                );
+                            })
+                        }
+                        <Button onClick={handleNextPage} className="bg-primary_red hover:bg-primary_red">Next</Button>
+
+                        <select value={itemsPerPage} onChange={handleItemPerPageChange} className="border-2 rounded-md bg-primary_red border-primary_red text-white outline-none ">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value={productCount}>All</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>}
+        </>;
+    }
+
     return (
         <div>
             <div>
@@ -140,41 +185,7 @@ export default function Page() {
                     </div>
 
                     <div className="col-span-3">
-                        {isSuccess && <h1 className="px-4 mb-2">Items Found : <span className="text-primary_red font-semibold">{products?.data.length || 0}</span></h1>}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-                            {isLoading && <div>Loading...</div>}
-                            {products?.data?.length == 0 && <h1>No Items</h1>}
-                            {products?.data?.length > 0 && products?.data.map(pd => <Product key={pd._id} product={pd} />)}
-                        </div>
-                        {isSuccess && <div className="flex justify-center my-20">
-                            <div className="flex flex-col">
-                                <h1 className="text-center mb-5">Current Page : <span className="text-primary_red font-semibold">{currentPage}</span></h1>
-                                <div className="flex gap-x-2">
-                                    <Button onClick={handlePreviousPage} className="bg-primary_red hover:bg-primary_red">Prev</Button>
-                                    {
-                                        pages.map(page => {
-                                            const correctPage = page + 1;
-                                            return (
-                                                <Button
-                                                    key={correctPage}
-                                                    onClick={() => setCurrentPage(correctPage)}
-                                                    className={cn("bg-white hover:bg-primary_red hover:text-white text-primary_red border border-primary_red font-semibold", "", { "bg-primary_red text-white": correctPage === currentPage })}>{correctPage}
-                                                </Button>
-                                            );
-                                        })
-                                    }
-                                    <Button onClick={handleNextPage} className="bg-primary_red hover:bg-primary_red">Next</Button>
-
-                                    <select value={itemsPerPage} onChange={handleItemPerPageChange} className="border-2 rounded-md bg-primary_red border-primary_red text-white outline-none ">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value={productCount}>All</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>}
+                        {content}
                     </div>
 
                 </div>
